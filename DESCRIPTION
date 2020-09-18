@@ -1,0 +1,19 @@
+Package: GRFics
+Type: Package
+Title: Efficient generation of realizations from approximate Gaussian
+        random fields
+Version: 1.0.0
+Author: Mathias Isaksen
+Maintainer: Mathias Isaksen <mathiasleanderi@gmail.com>
+Description: This package generates approximate realizations a Gaussian random field (GRF).
+    This is done using a Gaussian Markov random field (GMRF) approximation based on a 
+    stochastic partial differential equation (SPDE). A periodic boundary condition is used,
+    leading to realizations that are periodic along the vertical and horizontal boundaries.
+License: What license is it under?
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.1.1
+Imports: Rdpack
+RdMacros: Rdpack
+NeedsCompilation: no
+Packaged: 2020-09-18 23:22:03 UTC; PC
