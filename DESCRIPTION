@@ -2,7 +2,7 @@ Package: GRFics
 Type: Package
 Title: Efficient generation of realizations from approximate Gaussian
         random fields
-Version: 1.2.0
+Version: 1.2.1
 Author: Mathias Isaksen
 Maintainer: Mathias Isaksen <mathiasleanderi@gmail.com>
 Description: This package generates approximate realizations a Gaussian random field (GRF).
@@ -16,4 +16,4 @@ RoxygenNote: 6.1.1
 Imports: Rdpack
 RdMacros: Rdpack
 NeedsCompilation: no
-Packaged: 2020-11-28 19:12:07 UTC; PC
+Packaged: 2020-11-28 20:09:40 UTC; PC

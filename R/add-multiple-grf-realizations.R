@@ -34,10 +34,12 @@
 #' @author Mathias Isaksen
 
 add.multiple.grf.realizations = function(grf.object, num.realizations = NULL, realization.names = NULL, seed = NULL) {
-  if (is.null(num.realizations) & !is.null(realization.names)) {
-    num.realizations = length(realization.names)
-  } else {
-    stop("Both num.realizations and realization.names is missing.")
+  if (is.null(num.realizations)) {
+    if (!is.null(realization.names)) {
+      num.realizations = length(realization.names)
+    } else {
+      stop("Both num.realizations and realization.names is missing.")
+    }
   }
 
   for (i in 1:num.realizations) {
