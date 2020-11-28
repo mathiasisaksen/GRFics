@@ -1,5 +1,8 @@
 # GRFics
+![](https://i.imgur.com/1Ptm5NI.png)
+
 GRFics is an R library for efficient generation of approximate realizations from two-dimensional Gaussian random fields (GRFs).
+
 The package aims to be simple to use, even for those without a background in statistics. 
 
 ## Technical details

@@ -196,13 +196,16 @@ permuted.cholesky.decomp = function(Q) {
   return(list(L.perm=L.perm, P=P))
 }
 
-generate.gmrf.realization = function(chol.object, Q, n.sim = 1, z) {
+generate.gmrf.realization = function(chol.object, Q, n.sim = 1, z = NULL, seed = NULL) {
   if (!missing(Q)) {
     chol.object = permuted.cholesky.decomp(Q)
   }
+  if (!is.null(seed)) {
+    set.seed(seed)
+  }
   n = nrow(chol.object$L.perm)
   u = matrix(NA, nrow=n, ncol=n.sim)
-  if (missing(z)) {
+  if (is.null(z)) {
     z = matrix(rnorm(n*n.sim), nrow=n, ncol=n.sim)
   } else {
     z = matrix(z, nrow=n, ncol=n.sim, byrow=FALSE)
@@ -216,4 +219,10 @@ generate.gmrf.realization = function(chol.object, Q, n.sim = 1, z) {
   } else {
     return(u)
   }
+}
+
+standardize = function(values, lower = NULL, upper = NULL) {
+  lower = ifelse(is.null(lower), min(values), lower)
+  upper = ifelse(is.null(upper), max(values), upper)
+  return((values - lower)/(upper - lower))
 }

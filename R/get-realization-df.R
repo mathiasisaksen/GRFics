@@ -1,11 +1,15 @@
-#' Get a data frame containing grid cell centers and corresponding values of the GRF
+#' Get a data frame containing grid cell centers and corresponding values of multiple realizations.
 #'
-#' This function returns a \code{(resolution.x*resolution.y) x 3} data frame, containing the coordinates of the centers of the grid cells in the regular grid and the value of the GRF in each location.
+#' This function returns a data frame containing 4 columns: The x- and y-coordinates of the centers of the grid cells in the regular grid, the value of the GRF in each location, and the name of the realization.
 #'
 #' @param grf.object The GRF object of interest.
-#' @param realization.number The index of the realization of interest.
+#' @param realization.numbers The indices of the realizations of interest.
+#' @param realization.names The names of the realizations of interest.
+#' @param all.realizations If true, the data frame will include all of the realizations.
 #'
-#' @return A \code{(resolution.x*resolution.y) x 3} \code{data.frame}.
+#' @details If more than one of \code{realization.names}, \code{all.realizations} and \code{realization.numbers} is specified, the prioritization is \code{realization.names} > \code{all.realizations} > \code{realization.numbers}.
+
+#' @return A \code{(num.realizations*resolution.x*resolution.y) x 4} \code{data.frame}.
 #'
 #' @examples
 #' # Prepare GRF object
@@ -33,8 +37,30 @@
 #' vector.df = original.df
 #'
 #' @export
-get.realization.df = function(grf.object, realization.number = 1) {
+
+get.realization.df = function(grf.object, realization.numbers = 1, realization.names = NULL, all.realizations = FALSE) {
+  if (!is.null(realization.names)) {
+    chosen.realizations = realization.names
+    chosen.names = realization.names
+  } else if (all.realizations) {
+    chosen.realizations = 1:length(grf.object$realizations)
+    chosen.names = names(grf.object$realizations)
+  } else {
+    chosen.realizations = realization.numbers
+    chosen.names = names(grf.object$realizations)[realization.numbers]
+  }
+
+  z.total = NULL
+  name.total = NULL
+  grid.size = nrow(grf.object$grid)
+
+  for (i in 1:length(chosen.realizations)) {
+    z.total = c(z.total, grf.object$realizations[[chosen.realizations[i]]])
+    name.total = c(name.total, rep(chosen.names[i], grid.size))
+  }
+
   return(data.frame(x = grf.object$grid[, 1],
                     y = grf.object$grid[, 2],
-                    z = grf.object$realizations[[realization.number]]))
+                    z = z.total,
+                    name = name.total))
 }

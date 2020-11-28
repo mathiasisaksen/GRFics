@@ -7,7 +7,8 @@
 generate.grf.object(x.lower = -1, x.upper = 1, y.lower = -1,
   y.upper = 1, resolution.x = 100, resolution.y = 100,
   range.parameter = 1, scale.parameter = 1, strength.parameter = 1,
-  direction.parameter = 0, initial.seed = 0, params = NULL)
+  direction.parameter = 0, initial.seed = 0, params = NULL,
+  num.realizations = NULL, realization.names = NULL)
 }
 \arguments{
 \item{x.lower, x.upper, y.lower, y.upper}{Specifies the boundaries of the rectangular
@@ -29,6 +30,10 @@ realizations. Setting \code{scale.parameter = a} is equivalent to setting
 \item{initial.seed}{The initial seed value used when generating realizations.}
 
 \item{params}{Optional, a list containing all of the above parameters.}
+
+\item{num.realizations}{The number of realizations to initialize the GRF object with.}
+
+\item{realization.names}{The names of the realizations to initialize the GRF object with.}
 }
 \value{
 A list containing:
@@ -39,6 +44,9 @@ A list containing:
 }
 \description{
 Creates a list containing the elements necessary for doing essential computations with the GRF approximation.
+}
+\details{
+If the GRF object is to be initialized with realizations, either \code{num.realizations} or \code{realization.names} must be specified.
 }
 \examples{
 # Prepare GRF object

@@ -2,20 +2,28 @@
 % Please edit documentation in R/get-realization-df.R
 \name{get.realization.df}
 \alias{get.realization.df}
-\title{Get a data frame containing grid cell centers and corresponding values of the GRF}
+\title{Get a data frame containing grid cell centers and corresponding values of multiple realizations.}
 \usage{
-get.realization.df(grf.object, realization.number = 1)
+get.realization.df(grf.object, realization.numbers = 1,
+  realization.names = NULL, all.realizations = FALSE)
 }
 \arguments{
 \item{grf.object}{The GRF object of interest.}
 
-\item{realization.number}{The index of the realization of interest.}
+\item{realization.numbers}{The indices of the realizations of interest.}
+
+\item{realization.names}{The names of the realizations of interest.}
+
+\item{all.realizations}{If true, the data frame will include all of the realizations.}
 }
 \value{
-A \code{(resolution.x*resolution.y) x 3} \code{data.frame}.
+A \code{(num.realizations*resolution.x*resolution.y) x 4} \code{data.frame}.
 }
 \description{
-This function returns a \code{(resolution.x*resolution.y) x 3} data frame, containing the coordinates of the centers of the grid cells in the regular grid and the value of the GRF in each location.
+This function returns a data frame containing 4 columns: The x- and y-coordinates of the centers of the grid cells in the regular grid, the value of the GRF in each location, and the name of the realization.
+}
+\details{
+If more than one of \code{realization.names}, \code{all.realizations} and \code{realization.numbers} is specified, the prioritization is \code{realization.names} > \code{all.realizations} > \code{realization.numbers}.
 }
 \examples{
 # Prepare GRF object

@@ -15,6 +15,10 @@
 #' @param strength.parameter,direction.parameter These parameters are used to specify a range that depends on direction. If \code{strength.parameter = p} and \code{direction.parameter = theta}, then the range is \code{p} times longer along the direction given by \code{theta}, when compared to the range along the direction perpendicular to \code{theta}. \code{direction.parameter} is the angle formed with the x-axis measured in radians.
 #' @param params Optional, a list containing all of the above parameters.
 #' @param initial.seed The initial seed value used when generating realizations.
+#' @param num.realizations The number of realizations to initialize the GRF object with.
+#' @param realization.names The names of the realizations to initialize the GRF object with.
+#'
+#' @details If the GRF object is to be initialized with realizations, either \code{num.realizations} or \code{realization.names} must be specified.
 #'
 #' @return A list containing:
 #' \item{Q}{The precision matrix of the GRF approximation.}
@@ -69,7 +73,9 @@ generate.grf.object = function(x.lower = -1, x.upper = 1, y.lower = -1, y.upper 
                                range.parameter = 1, scale.parameter = 1,
                                strength.parameter = 1, direction.parameter = 0,
                                initial.seed = 0,
-                               params = NULL) {
+                               params = NULL,
+                               num.realizations = NULL,
+                               realization.names = NULL) {
   required.parameters = c("x.lower", "x.upper", "y.lower", "y.upper",
                           "resolution.x", "resolution.y", "range.parameter", "scale.parameter",
                           "strength.parameter", "direction.parameter")
@@ -93,6 +99,10 @@ generate.grf.object = function(x.lower = -1, x.upper = 1, y.lower = -1, y.upper 
 
   Q = construct.Q(params = params)
   grid = generate.grid.centers(params = params)
-  return(list(Q = Q, grid = grid, initial.seed = initial.seed, params = params))
+  grf.object = list(model.components = list(Q = Q), grid = grid, initial.seed = initial.seed, params = params)
+  if (!(is.null(num.realizations) & is.null(realization.names))) {
+    grf.object = add.multiple.grf.realizations(grf.object, num.realizations = num.realizations, realization.names = realization.names)
+  }
+  return(grf.object)
 }
 

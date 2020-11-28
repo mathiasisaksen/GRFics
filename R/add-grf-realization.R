@@ -1,4 +1,4 @@
-#' Create object used for generating realizations from a Gaussian random field
+#' Add realization to GRF object
 #'
 #' Generates a realization from the GRF object specified as a parameter, and adds it to the object.
 #'
@@ -31,19 +31,21 @@
 #'
 #' @export
 #' @author Mathias Isaksen
-add.grf.realization = function(grf.object, seed = NULL) {
-  if (!("chol.object" %in% names(grf.object))) {
-    grf.object$chol.object = permuted.cholesky.decomp(grf.object$Q)
-  }
-  if (!is.null(seed)) {
-    set.seed(seed)
+add.grf.realization = function(grf.object, realization.name = NULL, seed = NULL) {
+  if (is.null(grf.object$model.components$chol.object)) {
+    grf.object$model.components$chol.object = permuted.cholesky.decomp(grf.object$model.components$Q)
   }
 
-  if (!("realizations" %in% names(grf.object))) {
-    set.seed(grf.object$initial.seed)
-    grf.object$realizations = list(generate.gmrf.realization(chol.object = grf.object$chol.object))
-  } else {
-    grf.object$realizations[[length(grf.object$realizations)+1]] = generate.gmrf.realization(chol.object = grf.object$chol.object)
+  realization.name = ifelse(is.null(realization.name), as.character(length(grf.object$realizations)+1), realization.name)
+  if (!is.character(realization.name)) {
+    realization.name = as.character(realization.name)
   }
+
+  if (is.null(grf.object$realizations)) {
+    seed = ifelse(is.null(seed), grf.object$initial.seed, seed)
+  }
+
+  new.realization = generate.gmrf.realization(chol.object = grf.object$model.components$chol.object, seed = seed)
+  grf.object$realizations[[realization.name]] = new.realization
   return(grf.object)
 }
