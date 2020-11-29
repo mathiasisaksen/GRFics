@@ -80,31 +80,23 @@ evaluate.grf = function(locations, grf.object, realization.number = 1, realizati
   }
   # Convert onto matrix form for simpler syntax
   value.matrix = matrix(values, nrow = resolution.y, ncol = resolution.x, byrow = TRUE)
-  # Pad matrix for easier interpolation of locations close to left/bottom boundaries
-  value.matrix = cbind(value.matrix, value.matrix[, 1])
-  value.matrix = rbind(value.matrix, value.matrix[1, c(1:resolution.x, 1)])
 
-  # Compute separate x- and y-components of grid
-  grid.vectors = generate.grid.centers(0, 1, 0, 1, resolution.x, resolution.y, separate = TRUE)
-  x.g = grid.vectors$x
-  y.g = grid.vectors$y
-  h.x = x.g[2] - x.g[1]
-  h.y = y.g[2] - y.g[1]
-  # Add another grid cell for dealing with periodicity
-  x.g = c(x.g, x.g[resolution.x] + h.x)
-  y.g = c(y.g, y.g[resolution.y] + h.y)
-
-  # Move locations that are located to the left or underneath to padded area
-  norm.locs[, 1] = ifelse(norm.locs[, 1] < min(x.g), max(x.g) - (min(x.g)-norm.locs[, 1]), norm.locs[, 1])
-  norm.locs[, 2] = ifelse(norm.locs[, 2] < min(y.g), max(y.g) - (min(y.g)-norm.locs[, 2]), norm.locs[, 2])
+  h.x = 1/resolution.x
+  h.y = 1/resolution.x
 
   # Finds the indices of the columns that are to the left and right of each location
   left = round(norm.locs[, 1]/h.x)
   right = left + 1
 
+  left = ifelse(left == 0, resolution.x, left)
+  right = ifelse(right == (resolution.x+1), 1, right)
+
   # Finds the indices of the rows that are to the left and right of each location
   bottom = round(norm.locs[, 2]/h.y)
   top = bottom + 1
+
+  bottom = ifelse(bottom == 0, resolution.y, bottom)
+  top = ifelse(top == (resolution.y+1), 1, top)
 
   # Distance between grid cells, in this case constant
   width.x = x.g[right] - x.g[left]
