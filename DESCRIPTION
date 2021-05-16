@@ -1,19 +1,16 @@
 Package: GRFics
 Type: Package
-Title: Efficient generation of realizations from approximate Gaussian
-        random fields
-Version: 1.2.3
+Title: Efficient generation of noise functions from approximate
+        Gaussian random fields
+Version: 2.0.0
 Author: Mathias Isaksen
 Maintainer: Mathias Isaksen <mathiasleanderi@gmail.com>
-Description: This package generates approximate realizations a Gaussian random field (GRF).
-    This is done using a Gaussian Markov random field (GMRF) approximation based on a 
-    stochastic partial differential equation (SPDE). A periodic boundary condition is used,
-    leading to realizations that are periodic along the vertical and horizontal boundaries.
-License: What license is it under?
+Description: GRFics is an R library for efficient generation and interpolation of noise functions generated from two-dimensional Gaussian random fields (GRFs). This is done using a Gaussian Markov random field (GMRF) approximation based on a stochastic partial differential equation (SPDE). A periodic boundary condition is used, leading to noise functions that are periodic along the vertical and horizontal boundaries.
+License: MIT
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
-Imports: Rdpack
+Imports: Rdpack, akima
 RdMacros: Rdpack
 NeedsCompilation: no
-Packaged: 2020-11-29 22:00:50 UTC; PC
+Packaged: 2021-01-03 14:54:18 UTC; PC

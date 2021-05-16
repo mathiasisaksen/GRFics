@@ -25,13 +25,14 @@ A \code{(resolution.x*resolution.y) x 2} matrix specifying the centers of the gr
 Given a rectangular extent and a resolution in both the x- and y-directions, this function computes the coordinates of the centers of the grid cells.
 }
 \examples{
-# Create a 15 x 15 regular grid on [0, 1] x [0, 1]
-reg.grid = generate.grid.centers(0, 1, 0, 1, 15, 15)
+library(GRFics)
+# Create a 15 x 15 regular grid on [-1, 1]^2
+reg.grid = generate.grid.centers(-1, 1, -1, 1, 15, 15)
 plot(reg.grid, asp = 1, pch = 16)
-abline(h = seq(0, 1, length.out = 16),
-       v = seq(0, 1, length.out = 16))
+abline(h = seq(-1, 1, length.out = 16),
+       v = seq(-1, 1, length.out = 16))
 
 }
 \author{
-Mathias Isaksen
+Mathias Isaksen \email{mathiasleanderi@gmail.com}
 }
