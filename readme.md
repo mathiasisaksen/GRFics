@@ -9,7 +9,7 @@ The [technical details](#technical-details) behind the method are also described
 The package aims to be simple to use, even for those without a background in statistics. 
 
 At the moment, GRFics exists only as an R library.
-A Python version 
+A Python port might come sometime in the future.
 
 ## Installation
 The package can be installed by using the function `install_github` from the `devtools` library:
